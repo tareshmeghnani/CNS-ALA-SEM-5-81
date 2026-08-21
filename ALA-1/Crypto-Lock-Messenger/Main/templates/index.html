@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Crypto Lock Messenger</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">🔐</div>
+
+            <div>
+                <h2>Crypto Lock</h2>
+                <span>Messenger</span>
+            </div>
+        </div>
+
+        <div class="nav-section">
+
+            <p class="nav-label">SECURE MESSAGING</p>
+
+            <a href="#dashboard" class="nav-item active">
+                <span>▣</span>
+                Dashboard
+            </a>
+
+            <a href="#encryption" class="nav-item">
+                <span>🔒</span>
+                Encryption
+            </a>
+
+            <a href="#decryption" class="nav-item">
+                <span>🔓</span>
+                Decryption
+            </a>
+
+        </div>
+
+
+        <div class="security-card">
+
+            <div class="security-icon">🛡️</div>
+
+            <strong>Hybrid Encryption</strong>
+
+            <p>
+                AES-256 protects your message while
+                RSA-2048 secures the AES key.
+            </p>
+
+        </div>
+
+
+        <div class="sidebar-footer">
+            <span class="status-dot"></span>
+            System Secure
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div>
+                <h1>Secure Messaging</h1>
+
+                <p>
+                    AES-256 + RSA-OAEP Hybrid Encryption
+                </p>
+            </div>
+
+            <div class="secure-status">
+                <span class="status-dot"></span>
+                Secure Session
+            </div>
+
+        </header>
+
+
+        <!-- DASHBOARD -->
+
+        <section id="dashboard" class="dashboard">
+
+            <div class="welcome">
+
+                <div>
+
+                    <span class="badge">
+                        🔐 CRYPTOGRAPHY DEMO
+                    </span>
+
+                    <h2>
+                        Secure Message Encryption
+                    </h2>
+
+                    <p>
+                        Encrypt your message using AES-256
+                        and securely protect the AES key
+                        using RSA-2048 asymmetric encryption.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ALGORITHM CARDS -->
+
+            <div class="cards">
+
+                <div class="crypto-card">
+
+                    <div class="card-icon aes">
+                        🔐
+                    </div>
+
+                    <div>
+
+                        <h3>AES-256</h3>
+
+                        <span class="type">
+                            Symmetric Encryption
+                        </span>
+
+                        <p>
+                            Encrypts and decrypts the actual
+                            message using the same secret key.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="crypto-card">
+
+                    <div class="card-icon rsa">
+                        🔑
+                    </div>
+
+                    <div>
+
+                        <h3>RSA-2048</h3>
+
+                        <span class="type">
+                            Asymmetric Encryption
+                        </span>
+
+                        <p>
+                            Uses a public key and private key
+                            to securely protect the AES key.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ENCRYPT -->
+
+            <section id="encryption" class="panel">
+
+                <div class="panel-header">
+
+                    <div class="step-number">
+                        01
+                    </div>
+
+                    <div>
+                        <h2>Encrypt Message</h2>
+
+                        <p>
+                            Enter a message to generate
+                            encrypted ciphertext.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <form method="POST">
+
+                    <input type="hidden"
+                           name="action"
+                           value="encrypt">
+
+
+                    <label>Message</label>
+
+                    <textarea
+                        name="message"
+                        placeholder="Type your secret message here..."
+                        required>{{ original_message or '' }}</textarea>
+
+
+                    <button class="primary-btn"
+                            type="submit">
+
+                        🔒 Encrypt Message
+
+                    </button>
+
+                </form>
+
+            </section>
+
+
+            {% if encrypted_message %}
+
+            <!-- ENCRYPTION RESULT -->
+
+            <section class="panel result-panel">
+
+                <div class="result-header">
+
+                    <div>
+
+                        <span class="success-badge">
+                            ✓ ENCRYPTION SUCCESSFUL
+                        </span>
+
+                        <h2>Encrypted Payload</h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="flow">
+
+                    <div class="flow-card">
+
+                        <span class="flow-label">
+                            ORIGINAL MESSAGE
+                        </span>
+
+                        <p class="original-text">
+                            {{ original_message }}
+                        </p>
+
+                    </div>
+
+
+                    <div class="flow-arrow">
+                        ↓
+                    </div>
+
+
+                    <div class="flow-card highlighted">
+
+                        <span class="flow-label">
+                            AES-256 • SYMMETRIC
+                        </span>
+
+                        <p>
+                            Message encrypted using
+                            AES-GCM.
+                        </p>
+
+                    </div>
+
+
+                    <div class="flow-arrow">
+                        ↓
+                    </div>
+
+
+                    <div class="data-card">
+
+                        <div class="data-title">
+
+                            <span>
+                                ENCRYPTED MESSAGE
+                            </span>
+
+                            <button type="button"
+                                    class="copy-btn"
+                                    onclick="copyText('encryptedText')">
+                                Copy
+                            </button>
+
+                        </div>
+
+                        <textarea
+                            id="encryptedText"
+                            readonly>{{ encrypted_message }}</textarea>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RSA KEY -->
+
+                <div class="data-card">
+
+                    <div class="data-title">
+
+                        <span>
+                            🔑 RSA-OAEP ENCRYPTED AES KEY
+                        </span>
+
+                        <button type="button"
+                                class="copy-btn"
+                                onclick="copyText('rsaKey')">
+                            Copy
+                        </button>
+
+                    </div>
+
+                    <textarea
+                        id="rsaKey"
+                        readonly>{{ encrypted_aes_key }}</textarea>
+
+                </div>
+
+
+                <!-- NONCE -->
+
+                <div class="data-card">
+
+                    <div class="data-title">
+
+                        <span>
+                            AES-GCM NONCE
+                        </span>
+
+                        <button type="button"
+                                class="copy-btn"
+                                onclick="copyText('nonce')">
+                            Copy
+                        </button>
+
+                    </div>
+
+                    <textarea
+                        id="nonce"
+                        readonly>{{ nonce }}</textarea>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <strong>How the encryption works</strong>
+
+                    <p>
+                        AES-256 encrypts the actual message.
+                        The generated AES key is then encrypted
+                        using the recipient's RSA public key.
+                        The RSA private key is required to
+                        recover the AES key.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- DECRYPTION -->
+
+            <section id="decryption" class="panel">
+
+                <div class="panel-header">
+
+                    <div class="step-number green">
+                        02
+                    </div>
+
+                    <div>
+
+                        <h2>Decrypt Message</h2>
+
+                        <p>
+                            Recover the AES key using RSA and
+                            decrypt the message.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <form method="POST"
+                      id="decryptForm">
+
+                    <input type="hidden"
+                           name="action"
+                           value="decrypt">
+
+
+                    <label>Encrypted Message</label>
+
+                    <textarea
+                        name="encrypted_message"
+                        required>{{ encrypted_message }}</textarea>
+
+
+                    <label>RSA Encrypted AES Key</label>
+
+                    <textarea
+                        name="encrypted_aes_key"
+                        required>{{ encrypted_aes_key }}</textarea>
+
+
+                    <label>AES-GCM Nonce</label>
+
+                    <textarea
+                        name="nonce"
+                        required>{{ nonce }}</textarea>
+
+
+                    <button class="decrypt-btn"
+                            type="submit">
+
+                        🔓 Decrypt Message
+
+                    </button>
+
+                </form>
+
+            </section>
+
+            {% endif %}
+
+
+            {% if decrypted_message %}
+
+            <!-- DECRYPTION RESULT -->
+
+            <section id="decryption-result"
+                     class="panel decrypted-panel">
+
+                <div class="result-header">
+
+                    <div>
+
+                        <span class="success-badge green-badge">
+                            ✓ DECRYPTION SUCCESSFUL
+                        </span>
+
+                        <h2>Original Message Recovered</h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="decrypt-steps">
+
+                    <div class="decrypt-step">
+
+                        <div class="number">1</div>
+
+                        <h3>RSA Decryption</h3>
+
+                        <p>
+                            RSA private key decrypts the
+                            protected AES key.
+                        </p>
+
+                    </div>
+
+
+                    <div class="decrypt-step">
+
+                        <div class="number">2</div>
+
+                        <h3>AES Decryption</h3>
+
+                        <p>
+                            The recovered AES key decrypts
+                            the encrypted message.
+                        </p>
+
+                    </div>
+
+
+                    <div class="decrypt-step">
+
+                        <div class="number">3</div>
+
+                        <h3>Message Recovered</h3>
+
+                        <p>
+                            The original message is restored.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="final-message">
+
+                    <span>DECRYPTED MESSAGE</span>
+
+                    <div>
+                        {{ decrypted_message }}
+                    </div>
+
+                </div>
+
+
+                <div class="success-message">
+
+                    ✓ Message successfully decrypted using
+                    RSA + AES hybrid encryption.
+
+                </div>
+
+            </section>
+
+            {% endif %}
+
+
+            {% if error %}
+
+            <div class="error-box">
+
+                ⚠️ {{ error }}
+
+            </div>
+
+            {% endif %}
+
+
+            <!-- PROCESS -->
+
+            <section class="process-panel">
+
+                <h2>Hybrid Encryption Workflow</h2>
+
+                <div class="workflow">
+
+                    <div>
+                        <strong>01</strong>
+                        <span>Enter Message</span>
+                    </div>
+
+                    <b>→</b>
+
+                    <div>
+                        <strong>02</strong>
+                        <span>AES-256 Encrypt</span>
+                    </div>
+
+                    <b>→</b>
+
+                    <div>
+                        <strong>03</strong>
+                        <span>RSA Protect AES Key</span>
+                    </div>
+
+                    <b>→</b>
+
+                    <div>
+                        <strong>04</strong>
+                        <span>RSA Decrypt</span>
+                    </div>
+
+                    <b>→</b>
+
+                    <div>
+                        <strong>05</strong>
+                        <span>AES Decrypt</span>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <footer>
+
+                <strong>Crypto Lock Messenger</strong>
+
+                <p>
+                    Cryptography & Network Security Practical
+                </p>
+
+                <p>
+                    AES-256-GCM • RSA-2048-OAEP • SHA-256
+                </p>
+
+            </footer>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script>
+
+    function copyText(id) {
+        const element = document.getElementById(id);
+
+        if (element) {
+            navigator.clipboard.writeText(element.value);
+        }
+    }
+
+
+    // Automatically scroll to the decrypted message
+    // when a decrypted result exists.
+
+    const decryptedResult =
+        document.getElementById("decryption-result");
+
+    if (decryptedResult) {
+
+        window.addEventListener("load", function () {
+
+            setTimeout(function () {
+
+                decryptedResult.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+            }, 200);
+
+        });
+
+    }
+
+
+    // Highlight active navigation link
+
+    document.querySelectorAll(".nav-item").forEach(function(link) {
+
+        link.addEventListener("click", function() {
+
+            document.querySelectorAll(".nav-item").forEach(function(item) {
+
+                item.classList.remove("active");
+
+            });
+
+            this.classList.add("active");
+
+        });
+
+    });
+
+</script>
+
+</body>
+</html>
